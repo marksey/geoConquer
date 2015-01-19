@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>INSPINIA | Dashboard</title>
+
+    <link href="{% static 'css/sass/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+
+    <!-- Morris -->
+    <link href="{% static 'css/sass/plugins/morris/morris-0.4.3.min.css' %}" rel="stylesheet">
+
+    <!-- Toastr -->
+    <link href="{% static 'css/sass/plugins/toastr/toastr.css' %}" rel="stylesheet">
+
+    <!-- Gritter -->
+    <link href="{% static 'js/sass/plugins/gritter/jquery.gritter.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/sass/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sass/style.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/sass/plugins/iCheck/custom.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sass/plugins/steps/jquery.steps.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/sass/plugins/iCheck/custom.css' %}" rel="stylesheet">
+
+
+    <link href="{% static 'css/sass/plugins/dataTables/dataTables.bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sass/plugins/dataTables/dataTables.tableTools.min.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="pace-done fixed-sidebar skin-3">
+
+ 
+
+<div class="pace-activity"></div>
+
+    <div id="wrapper">
+
+
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element"> <span>
+                            <img alt="image" class="img-circle" src="{% static 'img/sass/profile_small.jpg' %}" />
+                             </span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Sonny Mayugba</strong>
+                             </span> <span class="text-muted text-xs block">Restaurant Owner <b class="caret"></b></span> </span> </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a href="profile.html">Profile</a></li>
+                                <li><a href="contacts.html">Contacts</a></li>
+                                <li><a href="mailbox.html">Mailbox</a></li>
+                                <li class="divider"></li>
+                                <li><a href="login.html">Logout</a></li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            IN+
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/login"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span> 
+                        
+                    </li>
+                    
+                    <li>
+                        <a href="#"><i class="fa fa-users"></i> <span class="nav-label">Customers</span></a>
+                 
+                    </li>
+
+                 
+                    <li>
+                        <a href="/follow_bot"><i class="fa fa-user"></i> 
+                            <span class="nav-label">Increase Followers</span> 
+                        </a>
+                    </li>
+
+                    <li  class="active">
+                        <a href="#"><i class="fa fa-area-chart"></i> 
+                            <span class="nav-label">Twitter Analytics</span> 
+                        </a>
+                    </li>
+
+
+                    <li >
+                        <a href="package.html"><i class="fa fa-database"></i> <span class="nav-label">Rewards & Offers</span></a>
+                    </li>
+                 
+                    <li>
+                        <a href="grid_options.html"><i class="fa fa-laptop"></i> <span class="nav-label">Settings</span></a>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Surveys</span>
+                    </li>
+            
+                    
+                </ul>
+
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
+                <div class="form-group">
+                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                </div>
+            </form>
+        </div>
+            <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                        <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages">
+                        <li>
+                            <div class="dropdown-messages-box">
+                                <a href="profile.html" class="pull-left">
+                                    <img alt="image" class="img-circle" src="{% static 'img/sass/a7.jpg' %}">
+                                </a>
+                                <div class="media-body">
+                                    <small class="pull-right">46h ago</small>
+                                    <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
+                                    <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="dropdown-messages-box">
+                                <a href="profile.html" class="pull-left">
+                                    <img alt="image" class="img-circle" src="{% static 'img/sass/a4.jpg' %}">
+                                </a>
+                                <div class="media-body ">
+                                    <small class="pull-right text-navy">5h ago</small>
+                                    <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
+                                    <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="dropdown-messages-box">
+                                <a href="profile.html" class="pull-left">
+                                    <img alt="image" class="img-circle" src="{% static 'img/sass/profile.jpg' %}">
+                                </a>
+                                <div class="media-body ">
+                                    <small class="pull-right">23h ago</small>
+                                    <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
+                                    <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="text-center link-block">
+                                <a href="mailbox.html">
+                                    <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="mailbox.html">
+                                <div>
+                                    <i class="fa fa-envelope fa-fw"></i> You have 16 messages
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="profile.html">
+                                <div>
+                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                    <span class="pull-right text-muted small">12 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="grid_options.html">
+                                <div>
+                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="text-center link-block">
+                                <a href="notifications.html">
+                                    <strong>See All Alerts</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li>
+                    <a href="login.html">
+                        <i class="fa fa-sign-out"></i> Log out
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+        </div>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>Track your new followers over time. Measure ROI.</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="index.html">Home</a>
+                        </li>
+                      
+                        <li class="active">
+                            <strong>Twitter Analytics</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+
+        <div class="row  border-bottom white-bg dashboard-header">
+
+
+       
+            
+
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>
+                                <i class="fa fa-area-chart"></i>
+                                Twitter Followers for the Month of January, 2015 
+                            </h5>
+
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config option 1</a>
+                                    </li>
+                                    <li><a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+
+                        </div>
+
+                        <div class="ibox-content">
+                            <canvas id="myChart" width="1200px" height="400px"></canvas>
+                        </div>
+
+                    </div>
+            </div>
+
+            <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">Today</span>
+                    <h5>
+                        <i class="fa fa-map-marker"></i> 
+                        Local Daily Followers
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">49</h1>
+                    <div class="stat-percent font-bold text-navy">30% <i class="fa fa-level-up"></i></div>
+                    <small>New followers - 10 mi radius</small>
+
+                </div>
+            </div>
+            </div>
+
+           
+
+             <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-info pull-right">Monthly</span>
+                    <h5>
+                        <i class="fa fa-map-marker"></i> 
+                        Local Monthly Followers
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">
+                        450
+                    </h1>
+                    <div class="stat-percent font-bold text-navy">55% <i class="fa fa-level-up"></i></div>
+                    <small>New followers - 10 mi radius </small>
+
+                </div>
+            </div>
+            </div>
+
+
+                <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-info pull-right">Monthly</span>
+                    <h5>
+                        <i class="fa fa-comments"></i> 
+                        Local Mentions
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">
+                        27 
+                    </h1>
+                    <div class="stat-percent font-bold text-navy">55% <i class="fa fa-level-up"></i></div>
+                    <small>Conversations about Red Rabbit</small>
+
+                </div>
+            </div>
+            </div>
+
+
+
+            <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-warning pull-right">Annual</span>
+                                <h5>
+                                    <i class="fa fa-database"></i> 
+                                    Total Purchase Value
+                                </h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins">$6,530</h1>
+                                <div class="stat-percent font-bold text-warning">16% <i class="fa fa-level-up"></i></div>
+                                <small>Total purchases from Twitter</small>
+                            </div>
+                        </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>New local Twitter followers.</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline"><div class="DTTT_container"><a class="DTTT_button DTTT_button_copy" id="ToolTables_DataTables_Table_0_0" tabindex="0" aria-controls="DataTables_Table_0"><span>Copy</span><div style="position: absolute; left: 0px; top: 0px; width: 45px; height: 29px; z-index: 99;"><embed id="ZeroClipboard_TableToolsMovie_1" src="js/plugins/dataTables/swf/copy_csv_xls_pdf.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="45" height="29" name="ZeroClipboard_TableToolsMovie_1" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=1&amp;width=45&amp;height=29" wmode="transparent"></div></a><a class="DTTT_button DTTT_button_csv" id="ToolTables_DataTables_Table_0_1" tabindex="0" aria-controls="DataTables_Table_0"><span>CSV</span><div style="position: absolute; left: 0px; top: 0px; width: 38px; height: 29px; z-index: 99;"><embed id="ZeroClipboard_TableToolsMovie_2" src="js/plugins/dataTables/swf/copy_csv_xls_pdf.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="38" height="29" name="ZeroClipboard_TableToolsMovie_2" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=2&amp;width=38&amp;height=29" wmode="transparent"></div></a><a class="DTTT_button DTTT_button_xls" id="ToolTables_DataTables_Table_0_2" tabindex="0" aria-controls="DataTables_Table_0"><span>Excel</span><div style="position: absolute; left: 0px; top: 0px; width: 44px; height: 29px; z-index: 99;"><embed id="ZeroClipboard_TableToolsMovie_3" src="js/plugins/dataTables/swf/copy_csv_xls_pdf.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="44" height="29" name="ZeroClipboard_TableToolsMovie_3" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=3&amp;width=44&amp;height=29" wmode="transparent"></div></a><a class="DTTT_button DTTT_button_pdf" id="ToolTables_DataTables_Table_0_3" tabindex="0" aria-controls="DataTables_Table_0"><span>PDF</span><div style="position: absolute; left: 0px; top: 0px; width: 39px; height: 29px; z-index: 99;"><embed id="ZeroClipboard_TableToolsMovie_4" src="js/plugins/dataTables/swf/copy_csv_xls_pdf.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="39" height="29" name="ZeroClipboard_TableToolsMovie_4" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=4&amp;width=39&amp;height=29" wmode="transparent"></div></a><a class="DTTT_button DTTT_button_print" id="ToolTables_DataTables_Table_0_4" title="View print view" tabindex="0" aria-controls="DataTables_Table_0"><span>Print</span></a></div><div class="clear"></div><div class="dataTables_length" id="DataTables_Table_0_length"><label><select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> followers per page</label></div>
+
+                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                        <label style="margin-right:15px;">Search:
+                            <input type="search" class="form-control input-sm" placeholder="Looking for tags?" aria-controls="DataTables_Table_0">
+                        </label>
+                    </div>
+                        <table class="table table-striped table-bordered table-hover dataTables-example dataTable dtr-inline" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                    <thead>
+                    <tr role="row">
+
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 133px;">
+                            <i class="fa fa-user"></i>
+                            Username
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 325px;">
+                            <i class="fa fa-comment"></i>
+                            What they're saying
+                        </th>
+                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 105px;">
+                            <i class="fa fa-tags"></i>
+                            Tags
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 106px;">
+                            <i class="fa fa-map-marker"></i>
+                            Location
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 126px;">
+                            <i class="fa fa-clock-o"></i>
+                            Last Tweeted
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 136px;">
+                            <i class="fa fa-clock-o"></i>
+                            Began Following
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 93px;">
+                            <i class="fa fa-group"></i>
+                            Followers
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    
+                    
+                    <tr class="gradeA odd" role="row">
+                        <td class="sorting_1">
+                            <img alt="image" height="50%" width="20%" class="img-circle" src="http://pbs.twimg.com/profile_images/487071728535748609/VEXdKzRM_normal.jpeg ">
+                            <a href="http://www.twitter.com/pizzadan">
+                                @pizzadan
+                            </a>
+                        </td>
+                        <td>
+                            <a href="https://twitter.com/PizzaDan/status/552876956258410498">
+                                Who wants pizza?
+                            </a>
+                        </td>
+                        <td>Pizza</td>
+                        <td>5 miles away</td>
+                        <td class="center">23 hours ago</td>
+                        <td class="center">17 mins ago</td>
+                        <td class="center">149</td>
+                    </tr><tr class="gradeA even" role="row">
+                        <td class="sorting_1">
+                            <img alt="image" height="50%" width="20%" class="img-circle" src="http://pbs.twimg.com/profile_images/553050424907796480/DVmK2m0v_normal.jpeg ">
+                            <a href="http://www.twitter.com/threadsforgents">@WildOppa</a>
+                        </td>
+                        <td>
+                            <a href="#https://twitter.com/PizzaDan/status/552876956258410498">
+                                Chinese food
+                            </a>
+                        </td>
+                        <td>Chinese</td>
+                        <td>2.5 miles away</td>
+                        <td class="center">3 hours ago</td>
+                        <td class="center">23 mins ago</td>
+                        <td class="center">458</td>
+                    </tr><tr class="gradeA odd" role="row">
+                        <td class="sorting_1">
+                            <img alt="image" height="50%" width="20%" class="img-circle" src="http://pbs.twimg.com/profile_images/551694704719310848/urzj49ja_normal.jpeg ">
+                            <a href="http://www.twitter.com/pizzadan">
+                                @gordongecko
+                            </a>
+                        </td>
+                        <td>
+
+                            <a href="#https://twitter.com/PizzaDan/status/552876956258410498">
+                                I'm hungry! Where's a good joint for burgers?
+                            </a>
+                        </td>
+                        <td>Burgers</td>
+                        <td>0.5 miles away</td>
+                        <td class="center">17 mins ago</td>
+                        <td class="center">36 mins ago</td>
+                        <td class="center">382</td>
+                    </tr><tr class="gradeA even" role="row">
+                        <td class="sorting_1">
+                            <img alt="image" height="50%" width="20%" class="img-circle" src="http://pbs.twimg.com/profile_images/552618168829493248/bMo7Tlfz_normal.jpeg ">
+                            <a href="http://www.twitter.com/pizzadan">
+                                @forrestgary
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#https://twitter.com/PizzaDan/status/552876956258410498">
+                                @TankHouse we have a great table set up!
+                            </a>
+                        </td>
+                        <td>Tank House</td>
+                        <td>1.4 miles away</td>
+                        <td class="center">14 mins ago</td>
+                        <td class="center">52 mins ago</td>
+                        <td class="center">97</td>
+                    </tr><tr class="gradeA odd" role="row">
+                         <td class="sorting_1">
+                            <img alt="image" height="50%" width="20%" class="img-circle" src="http://pbs.twimg.com/profile_images/478338056475275265/DgbODw0H_normal.jpeg ">
+                            <a href="http://www.twitter.com/pizzadan">
+                                @CDKennewag
+                            </a>
+                        </td>
+                        <td>
+                            <a href="https://twitter.com/PizzaDan/status/552876956258410498">
+                                Who wants pizza?
+                            </a>
+                        </td>
+                        <td>Pizza</td>
+                        <td>5 miles away</td>
+                        <td class="center">23 hours ago</td>
+                        <td class="center">1 hour 25 mins ago</td>
+                        <td class="center">149</td>
+                    </tr><tr class="gradeA even" role="row">
+                        <td class="sorting_1">
+                            <img alt="image" height="50%" width="20%" class="img-circle" src="http://pbs.twimg.com/profile_images/549292809262342144/Cd02QWe0_normal.jpeg ">
+                            <a href="http://www.twitter.com/threadsforgents">@dagothqueen</a>
+                        </td>
+                        <td>
+                            <a href="#https://twitter.com/PizzaDan/status/552876956258410498">
+                                Mexican food is bomb. @RedRabbit
+                            </a>
+                        </td>
+                        <td>Mexican food</td>
+                        <td>2.5 miles away</td>
+                        <td class="center">3 hours ago</td>
+                        <td class="center">1 hour 47 mins ago</td>
+                        <td class="center">458</td>
+                    </tr><tr class="gradeA odd" role="row">
+                        <td class="sorting_1">
+                            <img alt="image" height="50%" width="20%" class="img-circle" src="http://pbs.twimg.com/profile_images/550901968764293120/EGVRGPWY_normal.jpeg ">
+                            <a href="http://www.twitter.com/pizzadan">
+                                @steinertrek
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#https://twitter.com/PizzaDan/status/552876956258410498">
+                                Hella want baked pasta
+                            </a>
+                        </td>
+                        <td>Pasta</td>
+                        <td>3.5 miles away</td>
+                        <td class="center">54 mins ago</td>
+                        <td class="center">2 hours ago</td>
+                        <td class="center">397</td>
+                    </tr><tr class="gradeA even" role="row">
+                         <td class="sorting_1">
+                            <img alt="image" height="50%" width="20%" class="img-circle" src="http://pbs.twimg.com/profile_images/533956536079376384/34uZi-Yn_normal.jpeg ">
+                            <a href="http://www.twitter.com/threadsforgents">@blackspade93</a>
+                        </td>
+                        <td>
+                            <a href="#https://twitter.com/PizzaDan/status/552876956258410498">
+                                Hole in the wall pub. Drinking #coronas
+                            </a>
+                        </td>
+                        <td>Coronas</td>
+                        <td>1.3 miles away</td>
+                        <td class="center">2 hours ago</td>
+                        <td class="center">2 hours 13 mins ago</td>
+                        <td class="center">108</td>
+                    </tr><tr class="gradeA odd" role="row">
+                        <td class="sorting_1">
+                            <img alt="image" height="50%" width="20%" class="img-circle" src="http://pbs.twimg.com/profile_images/2765453429/249c53dcf2411abbda26873d1e626cec_normal.jpeg ">
+                            <a href="http://www.twitter.com/pizzadan">
+                                @mattmount
+                            </a>
+                        </td>
+                        <td>
+                            <a href="https://twitter.com/PizzaDan/status/552876956258410498">
+                                I love cupcakes from Starbucks!
+                            </a>
+                        </td>
+                        <td>cupcakes</td>
+                        <td>5 miles away</td>
+                        <td class="center">27 hours ago</td>
+                        <td class="center">2 hours 47 mins ago</td>
+                        <td class="center">349</td>
+                    </tr><tr class="gradeA even" role="row">
+                        <td class="sorting_1">
+                            <img alt="image" height="50%" width="20%" class="img-circle" src="http://pbs.twimg.com/profile_images/521177660945227776/PmB6lNU-_normal.png ">
+                            <a href="http://www.twitter.com/threadsforgents">@angels13</a>
+                        </td>
+                        <td>
+                            <a href="#https://twitter.com/PizzaDan/status/552876956258410498">
+                                Who wants to grab lunch? #LowBrau
+                            </a>
+                        </td>
+                        <td>lunch</td>
+                        <td>5.4 miles away</td>
+                        <td class="center">26 hours ago</td>
+                        <td class="center">3 hours 17 mins ago</td>
+                        <td class="center">218</td>
+                    </tr></tbody>
+                    <tfoot>
+                    <tr>
+                        <th rowspan="1" colspan="1">Twitter username</th>
+                        <th rowspan="1" colspan="1">What they're saying</th>
+                        <th rowspan="1" colspan="1">Tags</th>
+                        <th rowspan="1" colspan="1">Location</th>
+                        <th rowspan="1" colspan="1">Last Tweeted</th>
+                        <th rowspan="1" colspan="1">Last Followed</th>
+                        <th rowspan="1" colspan="1">Followers</th>
+                    </tr>
+                    </tfoot>
+                    </table><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button previous disabled" aria-controls="DataTables_Table_0" tabindex="0" id="DataTables_Table_0_previous"><a href="#">Previous</a></li><li class="paginate_button active" aria-controls="DataTables_Table_0" tabindex="0"><a href="#">1</a></li><li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a href="#">2</a></li><li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a href="#">3</a></li><li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a href="#">4</a></li><li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a href="#">5</a></li><li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a href="#">6</a></li><li class="paginate_button next" aria-controls="DataTables_Table_0" tabindex="0" id="DataTables_Table_0_next"><a href="#">Next</a></li></ul></div></div>
+
+                    </div>
+                </div>
+            </div> 
+
+       
+
+            
+
+
+
+            
+
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="{% static 'js/sass/jquery/jquery-2.1.1.min.js' %}"></script>
+    <script src="{% static 'js/sass/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/sass/plugins/metisMenu/jquery.metisMenu.js' %}"></script>
+    <script src="{% static 'js/sass/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+
+    <!-- Flot -->
+    <script src="{% static 'js/sass/plugins/flot/jquery.flot.js' %}"></script>
+    <script src="{% static 'js/sass/plugins/flot/jquery.flot.tooltip.min.js' %}"></script>
+    <script src="{% static 'js/sass/plugins/flot/jquery.flot.spline.js' %}"></script>
+    <script src="{% static 'js/sass/plugins/flot/jquery.flot.resize.js' %}"></script>
+    <script src="{% static 'js/sass/plugins/flot/jquery.flot.pie.js' %}"></script>
+
+    <!-- Peity -->
+    <script src="{% static 'js/sass/plugins/peity/jquery.peity.min.js' %}"></script>
+    <script src="{% static 'js/sass/demo/peity-demo.js' %}"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="{% static 'js/sass/custom/inspinia.js' %}"></script>
+    <script src="{% static 'js/sass/plugins/pace/pace.min.js' %}"></script>
+
+    <!-- jQuery UI -->
+    <script src="{% static 'js/sass/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+
+    <!-- GITTER -->
+    <script src="{% static 'js/sass/plugins/gritter/jquery.gritter.min.js' %}"></script>
+
+    <!-- EayPIE -->
+    <script src="{% static 'js/sass/plugins/easypiechart/jquery.easypiechart.js' %}"></script>
+
+    <!-- Sparkline -->
+    <script src="{% static 'js/sass/plugins/sparkline/jquery.sparkline.min.js' %}"></script>
+
+    <!-- Sparkline demo data  -->
+    <script src="{% static 'js/sass/demo/sparkline-demo.js' %}"></script>
+
+    <!-- ChartJS-->
+    <script src="{% static 'js/sass/plugins/chartJs/Chart.min.js' %}"></script>
+
+    <script src="//d85wutc1n854v.cloudfront.net/live/js/behavior.js"></script>
+    <script src="//d85wutc1n854v.cloudfront.net/live/js/behavior.js"></script>
+
+
+    <!-- Custom javascript -->
+    <script src="{% static 'js/sass/custom/inspinia.js' %}"></script>
+
+    <script src="{% static 'js/sass/demo/flot-demo.js' %}"></script>
+
+    <script src="{% static 'js/sass/plugins/validate/jquery.validate.min.js' %}"></script>
+
+    <script src="{% static 'js/sass/plugins/staps/jquery.steps.min.js' %}"></script>
+
+    <script src="{% static 'js/sass/plugins/dataTables/dataTables.bootstrap.js' %}"></script>
+    <script src="{% static 'js/sass/plugins/dataTables/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'js/sass/plugins/dataTables/dataTables.tableTools.min.js' %}"></script>
+
+    <script src="{% static 'js/sass/follow_bot/hashtags.js' %}"></script>
+
+
+   
+
+
+
+
+
+    <script>
+        var ctx = document.getElementById("myChart").getContext("2d");
+
+
+        var options = {
+
+            ///Boolean - Whether grid lines are shown across the chart
+            scaleShowGridLines : true,
+
+            //String - Colour of the grid lines
+            scaleGridLineColor : "rgba(0,0,0,.05)",
+
+            //Number - Width of the grid lines
+            scaleGridLineWidth : 1,
+
+            //Boolean - Whether the line is curved between points
+            bezierCurve : true,
+
+            //Number - Tension of the bezier curve between points
+            bezierCurveTension : 0.4,
+
+            //Boolean - Whether to show a dot for each point
+            pointDot : true,
+
+            //Number - Radius of each point dot in pixels
+            pointDotRadius : 4,
+
+            //Number - Pixel width of point dot stroke
+            pointDotStrokeWidth : 1,
+
+            //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+            pointHitDetectionRadius : 20,
+
+            //Boolean - Whether to show a stroke for datasets
+            datasetStroke : true,
+
+            //Number - Pixel width of dataset stroke
+            datasetStrokeWidth : 2,
+
+            //Boolean - Whether to fill the dataset with a colour
+            datasetFill : true,
+
+
+        };
+
+        var data = {
+            labels: ["Jan 1", "Jan 8", "Jan 15", "Jan 22", "Jan 29"],
+            datasets: [
+                {
+                    label: "My First dataset",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: [2500, 2700, 2900, 3100, 3300]
+                },
+                {
+                    label: "My Second dataset",
+                    fillColor: "rgba(151,187,205,0.2)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: [2000, 2000, 2400, 3000, 3300]
+                }
+            ]
+        };
+
+        var myLineChart = new Chart(ctx).Line(data, options);
+
+
+    </script>
+
+
+    <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                <div class="modal-content animated bounceInRight">
+
+
+
+    
+
+</body>
+</html>

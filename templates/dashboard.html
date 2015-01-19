@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>GeoConquer App</title>
+
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/custom/sidebar.css' %}" rel="stylesheet">
+        <link href="{% static 'css/custom/dashboard.css' %}" rel="stylesheet">
+        <link href="{% static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+        <link href="{% static 'css/common/hashtags.css' %}" rel="stylesheet">
+
+    </head>
+
+    <body class="pace-done fixed-sidebar skin-3">
+
+        <div class="pace pace-inactive">
+            <div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">
+                <div class="pace-progress-inner"></div>
+            </div>
+            <div class="pace-activity"></div>
+        </div>
+
+        <div id="wrapper">
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+                    <div class="sidebar-collapse">
+
+                        <ul class="nav" id="side-menu" style="overflow: hidden; width: auto; height: 100%;">
+                            <li class="nav-header">
+                                <div class="dropdown profile-element"> 
+                                    <span>
+                                        <img alt="image" class="img-circle" src="{% static 'img/profile_small.jpg' %}" />
+                                     </span>
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                        <span class="clear"> 
+                                            <span class="block m-t-xs"> 
+                                                <strong class="font-bold">Sonny Mayugba</strong>
+                                            </span> 
+                                            <span class="text-muted text-xs block">
+                                                Restaurant Owner 
+                                                <b class="caret"></b>
+                                            </span> 
+                                        </span> 
+                                    </a>
+                                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                        <li><a href="profile.html">Profile</a></li>
+                                        <li><a href="contacts.html">Contacts</a></li>
+                                        <li><a href="mailbox.html">Mailbox</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="login.html">Logout</a></li>
+                                    </ul>
+                                </div>
+                                <div class="logo-element">
+                                    IN+
+                                </div>
+                            </li>
+                            <li class="active">
+                                <a href="/login">
+                                <i class="fa fa-th-large"></i> 
+                                <span class="nav-label">Dashboard</span> 
+                            </li>
+                            
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-users"></i>
+                                    <span class="nav-label">Customers</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/follow_bot">
+                                    <i class="fa fa-user"></i> 
+                                    <span class="nav-label">Increase Followers</span> 
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/twitter_analytics">
+                                    <i class="fa fa-area-chart"></i> 
+                                    <span class="nav-label">Twitter Analytics</span> 
+                                </a>
+                            </li>
+                         
+                            <li >
+                                <a href="package.html">
+                                    <i class="fa fa-database"></i>
+                                    <span class="nav-label">Rewards & Offers</span>
+                                </a>
+                            </li>
+                         
+                            <li>
+                                <a href="grid_options.html">
+                                    <i class="fa fa-laptop"></i>
+                                    <span class="nav-label">Settings</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-edit"></i>
+                                    <span class="nav-label">Surveys</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+
+            <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
+                    <div class="form-group">
+                        <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                    </div>
+                </form>
+            </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <span class="m-r-sm text-muted welcome-message">Welcome to Geo Conquer.</span>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-messages">
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="profile.html" class="pull-left">
+                                        <img alt="image" class="img-circle" src="{% static 'img/a7.jpg' %}">
+                                    </a>
+                                    <div class="media-body">
+                                        <small class="pull-right">46h ago</small>
+                                        <strong>Mike Loreipsum</strong> started following
+                                        <strong>Monica Smith</strong>. <br>
+                                        <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="profile.html" class="pull-left">
+                                        <img alt="image" class="img-circle" src="{% static 'img/a4.jpg' %}">
+                                    </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right text-navy">5h ago</small>
+                                        <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
+                                        <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="profile.html" class="pull-left">
+                                        <img alt="image" class="img-circle" src="{% static 'img/profile.jpg' %}">
+                                    </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right">23h ago</small>
+                                        <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
+                                        <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="mailbox.html">
+                                        <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-alerts">
+                            <li>
+                                <a href="mailbox.html">
+                                    <div>
+                                        <i class="fa fa-envelope fa-fw"></i> You have 16 messages
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="profile.html">
+                                    <div>
+                                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                        <span class="pull-right text-muted small">12 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="grid_options.html">
+                                    <div>
+                                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="notifications.html">
+                                        <strong>See All Alerts</strong>
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a href="login.html">
+                            <i class="fa fa-sign-out"></i> Log out
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+            </div>
+          
+        <div class="col-md-12" >
+            <div id="mapWrapper" class="ibox">
+                <div class="ibox-title" >
+                    <h5>Customers near Red Rabbit, 2718 J St Sacramento, CA 95428</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a id="autoFollow" href="#" data-toggle="modal">
+                                    <i class="fa fa-building-o"></i>
+                                    Auto-follow within radius
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-refresh"></i> 
+                                    Reload tweets
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-search"></i> 
+                                    Set radius
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-clock-o"></i> 
+                                    Time filter
+                                </a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+
+                </div>
+                <div class="ibox-content">
+                    <p>
+                        <small class="text-muted">
+                            533 people are tweeting within a 7 mi radius of your storefront. 
+                        </small>
+                        <span class="pull-right">
+                            <small class="block text-muted">Last updated <strong>19m</strong> ago.</small>
+                        </span>
+                    </p>
+
+                    Location: <input type="text" id="storeMap-address" style="width: 35%;margin-bottom:5px;"/>
+                    Radius (mi): <input type="text" id="storeMap-radius" style="width: 5%;margin-bottom: 5px;"/>
+
+                    <div style="height:500px; position: relative; background-color: rgb(229, 227, 223); overflow: hidden;" class="google-map" id="map2">
+                           
+                        <div id="storeMap" style="width: 100%; height: 100%; margin:5px;"></div>              
+
+                    </div>
+
+                    Lat.: <input type="text" id="storeMap-lat" style="margin:5px;"/>
+                    Long.: <input type="text" id="storeMap-lon" style="margin:5px;"/> 
+
+                    <h5>Percent Geo Conquered</h5>
+                    <div class="progress progress-striped">
+                        <div style="width: 50%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" role="progressbar" class="progress-bar progress-bar-warning">
+                            <span class="sr-only">40% Complete (success)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        <i class="fa fa-comments"></i>
+                        Select Hashtags  
+                    </h5>
+
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="#">Import from Follow Bot</a>
+                            </li>
+                            <li><a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+                <div class="ibox-content">
+
+                    <div id="tagBody"></div>
+                    <div class="input-append">
+                      <input id="inpAddTags" type="text">
+                      <div class="btn-group">
+                              <button id="addTag" class="btn btn-danger btn-add-tags" tabindex="-1">Add</button>
+                              <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+                                      <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                      <li><a href="#" class="btn-del-tags" data-original-title="" title="">Delete all tags</a></li>
+                              </ul>
+                      </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+       
+        <!-- Mainly scripts -->
+        <script src="{% static 'js/jquery/jquery-2.1.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+
+        <!-- Google Maps JavaScript -->
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn_onwOd4Pf03N4Ohzci-OSmTnwFry97o"></script>
+
+        <!-- Custom and plugin javascript -->
+        <script src="{% static 'js/custom/inspinia.js' %}"></script>
+
+
+
+
+        <!-- Common Javascript files -->
+        <script src="{% static 'js/common/google-maps-api.js' %}"></script>
+        <script src="{% static 'js/common/hashtags.js' %}"></script>
+
+
+        <!-- Javascript plugins! -->
+        <script src="{% static 'js/plugins/locationpicker.jquery.js' %}"></script>
+
+
+        <!-- MODALS -->
+
+
+        <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+            <div class="ibox-content">
+
+                <div>
+                    <div class="chat-activity-list">
+
+                        <div class="chat-element">
+                            <a href="#" class="pull-left">
+                                <img alt="image" class="img-circle" src="{% static 'img/a2.jpg' %}">
+                            </a>
+                            <div class="media-body ">
+                                <small class="pull-right text-navy">1m ago</small>
+                                <strong>Mike Smith</strong>
+                                <p class="m-b-xs">
+                                    Hey @LowBrau, just signed up for your awesome new service! How do I let my friends know about the surveys?
+                                </p>
+                                <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+                            </div>
+                        </div>
+
+                        <div class="chat-element right">
+                            <a href="#" class="pull-right">
+                                <img alt="image" class="img-circle" src="{% static 'img/a4.jpg' %}">
+                            </a>
+                            <div class="media-body text-right ">
+                                <small class="pull-left">5m ago</small>
+                                <strong>John Smith</strong>
+                                <p class="m-b-xs">
+                                    I can't really help...too tired but please come in after 5 PM.
+                                </p>
+                                <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+                            </div>
+                        </div>
+
+                        <div class="chat-element ">
+                            <a href="#" class="pull-left">
+                                <img alt="image" class="img-circle" src="{% static 'img/a2.jpg' %}">
+                            </a>
+                            <div class="media-body ">
+                                <small class="pull-right">2h ago</small>
+                                <strong>Mike Smith</strong>
+                                <p class="m-b-xs">
+                                    Sounds like a great plan!
+                                </p>
+                                <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                            <div class="chat-form">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <textarea class="form-control" placeholder="Message"></textarea>
+                                    </div>
+                                    <div class="text-right">
+                                        <button type="submit" class="btn btn-sm btn-primary m-t-n-xs"><strong>Send message</strong></button>
+                                        <button type="button" class="btn btn-sm btn-white m-t-n-xs" data-dismiss="modal">Close</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                    </div>
+                                    </div>
+        </div>
+
+        <script src="{% static 'js/common/location-settings.js' %}"></script>
+
+
+    </body>
+
+</html>

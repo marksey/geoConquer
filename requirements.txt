@@ -1,0 +1,17 @@
+Django==1.7.1
+dateutils==0.6.6
+dj-database-url==0.3.0
+oauth-python-twitter==1.0
+oauthlib==0.7.2
+py2app==0.7.3
+pyOpenSSL==0.13.1
+python-dateutil==1.5
+pytz==2013.7
+requests==2.4.3
+requests-oauthlib==0.4.2
+simplejson==3.6.5
+twitter==1.15.0
+twython==3.2.0
+unittest2==0.5.1
+virtualenv==1.11.6
+wsgiref==0.1.2
