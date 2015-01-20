@@ -9,4 +9,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^dashboard/$', 'helloWorld.views.dashboard', name='dashboard'),
     url(r'^json_local_tweets/$', 'twitter_api.twitter_api.json_local_tweets', name='json_local_tweets'),
+    url(r'^favorite_tweet/$', 'twitter_api.twitter_api.favorite_tweet', name='favorite_tweet'),
+
 )

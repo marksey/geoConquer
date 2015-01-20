@@ -1,4 +1,5 @@
 var allMarkers = {};
+var allUsers = {};
 var map;
 var infowindow, marker;
 var myLatitude = 38.575655;
@@ -30,11 +31,40 @@ function removeMarkers(tag) {
         marker.setMap(null);
     }
 
+    delete allMarkers[tag]; 
+
 }
 
-function drawTweets(q, local_tweets) {
+function removeUsers(tag) {
+
+    delete allUsers[tag];
+
+}
+
+function getAllTweetsInRadius()
+{
+    var usersToFollow = [];
+
+    $.each( allUsers, function( tag, user ) {
+      
+        usersToFollow.push(user);
+      
+    });
+
+    console.log("To follow: " + usersToFollow);
+
+
+}
+
+function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
+
+            myLatitude = parseFloat(centerCoords.split(',')[0]);
+            myLongitude = parseFloat(centerCoords.split(',')[1]);
+
+            radiusFromCenter = Math.round(parseFloat(radiusFromCenter))
 
             allMarkers[q] = [];
+            allUsers[q] = [];
 
             var map = $('#storeMap').locationpicker('map').map;
             var infowindow = new google.maps.InfoWindow({ maxWidth: 300 });
@@ -44,6 +74,16 @@ function drawTweets(q, local_tweets) {
 
              for (var i = 0; i < local_tweets.length; i++) { 
 
+
+                var milesAway = calculateDistance(myLatitude, myLongitude, local_tweets[i]['latitude'], local_tweets[i]['longitude']);
+
+                milesAway = Math.round(milesAway * 10) / 10;   //Round to the nearest tenth
+
+
+                //Don't include those outside radius
+                if (milesAway > radiusFromCenter) continue;
+
+
                 marker = new google.maps.Marker({
                     position: new google.maps.LatLng(local_tweets[i]['latitude'], local_tweets[i]['longitude']),
                     map: map,
@@ -51,6 +91,7 @@ function drawTweets(q, local_tweets) {
                 });
 
                 allMarkers[q].push(marker);
+                allUsers[q].push(local_tweets[i]['screen_name']);
 
 
                 console.log(marker);
@@ -59,9 +100,7 @@ function drawTweets(q, local_tweets) {
 
                     return function() {
 
-                        var milesAway = calculateDistance(myLatitude, myLongitude, local_tweets[i]['latitude'], local_tweets[i]['longitude']);
-
-                        milesAway = Math.round(milesAway * 10) / 10;   //Round to the nearest tenth
+                        
 
 
 
@@ -69,7 +108,7 @@ function drawTweets(q, local_tweets) {
                                                 '<div id="siteNotice"></div>'+
                                                 '<h3 id="firstHeading" class="firstHeading">'  +
                                                     '<img alt="image" height="10%" width="10%" class="img-circle" src="' + local_tweets[i]['profile_image_url'] + ' ">&nbsp;' +
-                                                    '<a href="http://www.twitter.com/' + local_tweets[i]['screen_name'] + '" target="_blank">@' + local_tweets[i]['screen_name'] +
+                                                    '<a class="profileHeader" href="http://www.twitter.com/' + local_tweets[i]['screen_name'] + '" target="_blank">@' + local_tweets[i]['screen_name'] +
                                                     '</a>'+
                                                 '</h3>'+
                                                 '<div id="bodyContent">'+
@@ -81,7 +120,8 @@ function drawTweets(q, local_tweets) {
                                                         '</b>' +
                                                         '<span class="pull-right">' +
                                                                 '<a href="#myModal" class="fa fa-mail-reply" data-toggle="modal">&nbsp;&nbsp;&nbsp;&nbsp;</a>' +
-                                                                '<a href="#"class="fa fa-plus" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip on right"></a>' +
+                                                                '<a class="favoriteTweet" href="#"class="fa fa-star" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip on right"></a>' +
+                                                                '<a href="#"class="fa fa-user" data-tweet-id="' + local_tweets[i]['tweet_id'] + '" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip on right" style="margin-left: 12px;"></a>' +
                                                         '</span>' + 
                                                     '</p>'+
                                                 '</div>'+
@@ -110,24 +150,22 @@ function drawTweets(q, local_tweets) {
                 })();
     }
 
-function geoSearchByTag(q, centerCoords){
+function geoSearchByTag(q, centerCoords, radiusFromCenter){
 
-    alert("YO!");
-        
+            
     $.ajax({
         url : "/json_local_tweets/", // the endpoint
         type : "GET", // http method
         datatype: 'json',
         data: {
-                city : 'SAC',
-                radius : '10',
+                coords : centerCoords.replace(/\s/g, ''),
+                radius : Math.round(parseFloat(radiusFromCenter)),
                 q: q 
             },
         // handle a successful response
         success : function(local_tweet_results) {
-            
-            drawTweets(q, local_tweet_results);
 
+            drawTweets(q, local_tweet_results, centerCoords, radiusFromCenter);
 
         },
 

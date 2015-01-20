@@ -337,7 +337,7 @@
         location: {latitude: 40.7324319, longitude: -73.82480799999996},
         locationName: "",
         radius: 500,
-        zoom: 14,
+        zoom: 13,
         scrollwheel: true,
         inputBinding: {
             latitudeInput: null,

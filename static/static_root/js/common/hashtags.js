@@ -16,20 +16,20 @@ window.onload = function(){
     //Adding tags one at a time
     $('#addTag').click(function() {
        
-       
-       var tag = $('#inpAddTags').val();
+        var tag = $('#inpAddTags').val();
         
-       var newTagElement = '<span class="unit-tag" data-tag="' + tag  + '" data-id="278913968">'+
+        var newTagElement = '<span class="unit-tag" data-tag="' + tag  + '" data-id="278913968">'+
                         '<span>'  +  tag +  '</span>' + 
                         '<a href="#" class="delete" tabindex="-1">x</a>' +
                     '</span>';
             
         $('#tagBody').append(newTagElement);
 
-        //var map = $('#storeMap').locationpicker('map').map;
-       alert("yes");
-       // var centerCoordinates = map.getCenter().toString().substring(1, map.getCenter().toString().length - 1);
-        geoSearchByTag(tag, centerCoordinates);
+        var map = $('#storeMap').locationpicker('map').map;
+        var centerCoordinates = map.getCenter().toString().substring(1, map.getCenter().toString().length - 1);
+        var radius = $('#storeMap-radius').val();
+        geoSearchByTag(tag, centerCoordinates, radius);   
+      
 
     });
     
@@ -39,6 +39,7 @@ window.onload = function(){
         e.preventDefault();
         var tag = $(this).parent().text().slice(0,-1);
         removeMarkers(tag);
+        removeUsers(tag);
         $(this).parent().remove();
         
     });

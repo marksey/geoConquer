@@ -44,12 +44,28 @@ lat_long = {
 		   }
 
 
+def favorite_tweet(request):
+
+	tweet_id = request.GET.get('tweet_id')
+
+	t = Twitter(auth=OAuth('2972545266-aTWaptCudDu083vnmrnlBJ43zOFD6Z06ijWSoHj', 'wDHpTExvWwRoFUtDoU3Polk4On5B77Zss32JhFa78unfh', settings.CONSUMER_KEY, settings.CONSUMER_SECRET))
+ 
+ 	print("Tweet_id: %s" % (tweet_id))
+
+	try:
+		t.favorites.create(_id=tweet_id)
+		return HttpResponse("SUCCESS")
+	except TwitterHTTPError as e:
+		print("error: %s" % (str(e)))
+		return HttpResponse("FAIL")
+
 def geo_search_tweets(t, q, coords, radius):
     """
         Returns a list of tweets matching a certain phrase and location
     """
 
     return t.search.tweets(q=q, geocode='%s,%dkm' % (coords, radius), result_type='mixed', count=100)
+
 
 
 def json_local_tweets(request):
@@ -65,21 +81,23 @@ def json_local_tweets(request):
 
 	json_tweets = []
 
-	print("before init")
 	t = Twitter(auth=OAuth('2972545266-aTWaptCudDu083vnmrnlBJ43zOFD6Z06ijWSoHj', 'wDHpTExvWwRoFUtDoU3Polk4On5B77Zss32JhFa78unfh', settings.CONSUMER_KEY, settings.CONSUMER_SECRET))
-	print("twitter:")
-	print t
-
-
-	print("COORDs: ")
-	print(coords)
 	result = geo_search_tweets(t=t, q=q, coords=coords, radius=radius)
 
+	favorites = t.favorites.list(screen_name='cravesac', count=10000)
+	favorited_tweets = []
+	for f in favorites: favorited_tweets.append(f['id_str'])
+
+
+	print("#Faves: ")
+	print(len(favorites))
 
 	for tweet in result['statuses']:
 
 		if tweet['user']['screen_name'] not in already_added:
 
+			#Innocent until proven guilty!
+			already_favorited = False
 			tweet_time_stamp = datetime.datetime.strptime(tweet['created_at'],'%a %b %d %H:%M:%S +0000 %Y')
 
 			now = datetime.datetime.now()
@@ -90,18 +108,20 @@ def json_local_tweets(request):
 
 			days_since_tweet = diff.total_seconds() / 60.0 / 60 / 24
 
-
 			#If we can't have days > 1, then convert to hours for readability!
 			if days_since_tweet >= 1:
 				time_since_tweet = str(int(days_since_tweet)) + 'd ago '
 			else:
 				time_since_tweet = str(int(days_since_tweet * 24)) + 'h ago '
 
+			if str(tweet['id']) in favorited_tweets:
+				already_favorited = True
 
 			json_tweet = {
 							'screen_name' : tweet['user']['screen_name'],
 							'tweet_text'  : tweet['text'],
-							'tweet_id'	: tweet['id'],
+							'tweet_id'	  :	str(tweet['id']).encode("utf-8"),
+							'favorited'   : already_favorited,
 							'profile_image_url' : tweet['user']['profile_image_url'], 
 							'latitude'			: tweet['coordinates']['coordinates'][1],
 							'longitude'			: tweet['coordinates']['coordinates'][0],

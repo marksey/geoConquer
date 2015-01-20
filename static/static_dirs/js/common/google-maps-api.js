@@ -56,6 +56,8 @@ function getAllTweetsInRadius()
 
 }
 
+
+
 function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
 
             myLatitude = parseFloat(centerCoords.split(',')[0]);
@@ -90,9 +92,13 @@ function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
                     animation: google.maps.Animation.DROP
                 });
 
+                if (local_tweets[i]['favorited']) 
+                {
+                    marker.setIcon('http://google-docslist-gadget.googlecode.com/svn-history/r91/trunk/images/icon-star-big.gif');   
+                }
+
                 allMarkers[q].push(marker);
                 allUsers[q].push(local_tweets[i]['screen_name']);
-
 
                 console.log(marker);
 
@@ -100,9 +106,7 @@ function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
 
                     return function() {
 
-                        
-
-
+                         console.log("Screen name: " + local_tweets[i]['screen_name'] + " TWEET ID: " + local_tweets[i]['tweet_id'] + " favorited: " + local_tweets[i]['favorited'] + "\n");
 
                          var contentString = '<div id="content">' + 
                                                 '<div id="siteNotice"></div>'+
@@ -120,7 +124,8 @@ function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
                                                         '</b>' +
                                                         '<span class="pull-right">' +
                                                                 '<a href="#myModal" class="fa fa-mail-reply" data-toggle="modal">&nbsp;&nbsp;&nbsp;&nbsp;</a>' +
-                                                                '<a href="#"class="fa fa-plus" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip on right"></a>' +
+                                                                '<a href="#" class="fa fa-star" data-tweet-id="' + local_tweets[i]['tweet_id'] + '" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip on right" onclick="ajaxFavoriteTweet(this); return false;"></a>' +
+                                                                '<a href="#" class="fa fa-user" data-tweet-id="' + local_tweets[i]['tweet_id'] + '" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip on right" onclick="followUser(this); return false;" style="margin-left: 12px;"></a>' +
                                                         '</span>' + 
                                                     '</p>'+
                                                 '</div>'+
@@ -176,5 +181,36 @@ function geoSearchByTag(q, centerCoords, radiusFromCenter){
 
     });
 }
+
+function ajaxFavoriteTweet(obj) {
+
+    var tweet_id = obj.getAttribute("data-tweet-id");
+
+    console.log("Ajax: " + tweet_id);
+
+    $.ajax({
+        url : "/favorite_tweet/", // the endpoint
+        type : "GET", // http method
+        datatype: 'json',
+        data: {
+                tweet_id : tweet_id,
+            },
+        // handle a successful response
+        success : function(response) {
+                alert(response);
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+         
+            alert(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+
+    });
+
+    return false;
+}
+
+
 
 
