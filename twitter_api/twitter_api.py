@@ -54,10 +54,10 @@ def favorite_tweet(request):
 
 	try:
 		t.favorites.create(_id=tweet_id)
-		return HttpResponse("SUCCESS")
+		return HttpResponse(tweet_id)
 	except TwitterHTTPError as e:
 		print("error: %s" % (str(e)))
-		return HttpResponse("FAIL")
+		return HttpResponse(False)
 
 def geo_search_tweets(t, q, coords, radius):
     """

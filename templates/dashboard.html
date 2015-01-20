@@ -250,7 +250,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-wrench"></i>
                         </a>
-                        <ul class="dropdown-menu dropdown-user">
+                        <ul class="dropdown-menu dropdown-user" style="left:-80px;">
                             <li>
                                 <a id="autoFollow" href="#" data-toggle="modal">
                                     <i class="fa fa-building-o"></i>
@@ -258,9 +258,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <i class="fa fa-refresh"></i> 
-                                    Reload tweets
+                                <a id="autoFavorite" href="#">
+                                    <i class="fa fa-star"></i> 
+                                    Favorite within radius
                                 </a>
                             </li>
                             <li>
@@ -284,9 +284,7 @@
                 </div>
                 <div class="ibox-content">
                     <p>
-                        <small class="text-muted">
-                            533 people are tweeting within a 7 mi radius of your storefront. 
-                        </small>
+                            <span id="totalTweeters">0</span> people are tweeting within a <span id="radius">1</span> mi radius of your storefront. 
                         <span class="pull-right">
                             <small class="block text-muted">Last updated <strong>19m</strong> ago.</small>
                         </span>

@@ -1,5 +1,6 @@
 var allMarkers = {};
 var allUsers = {};
+var numberOfTweets = 0;
 var map;
 var infowindow, marker;
 var myLatitude = 38.575655;
@@ -30,6 +31,9 @@ function removeMarkers(tag) {
         var marker = allMarkers[tag][i];
         marker.setMap(null);
     }
+
+    numberOfTweets -= allMarkers[tag].length ;
+    $("#totalTweeters").html(numberOfTweets);
 
     delete allMarkers[tag]; 
 
@@ -81,6 +85,7 @@ function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
 
                 milesAway = Math.round(milesAway * 10) / 10;   //Round to the nearest tenth
 
+                var tweetUrl = 'http://www.twitter.com/' + local_tweets[i]['screen_name'] + '/status/' + local_tweets[i]['tweet_id'];
 
                 //Don't include those outside radius
                 if (milesAway > radiusFromCenter) continue;
@@ -91,6 +96,8 @@ function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
                     map: map,
                     animation: google.maps.Animation.DROP
                 });
+
+                marker.metadata = {tweet_id: local_tweets[i]['tweet_id']};
 
                 if (local_tweets[i]['favorited']) 
                 {
@@ -112,7 +119,7 @@ function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
                                                 '<div id="siteNotice"></div>'+
                                                 '<h3 id="firstHeading" class="firstHeading">'  +
                                                     '<img alt="image" height="10%" width="10%" class="img-circle" src="' + local_tweets[i]['profile_image_url'] + ' ">&nbsp;' +
-                                                    '<a class="profileHeader" href="http://www.twitter.com/' + local_tweets[i]['screen_name'] + '" target="_blank">@' + local_tweets[i]['screen_name'] +
+                                                    '<a target="_blank" class="profileHeader" href="http://www.twitter.com/' + local_tweets[i]['screen_name'] + '" target="_blank">@' + local_tweets[i]['screen_name'] +
                                                     '</a>'+
                                                 '</h3>'+
                                                 '<div id="bodyContent">'+
@@ -123,8 +130,8 @@ function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
                                                             '<i class="fa fa-map-marker"></i> ' + milesAway + ' mi away ' + 
                                                         '</b>' +
                                                         '<span class="pull-right">' +
-                                                                '<a href="#myModal" class="fa fa-mail-reply" data-toggle="modal">&nbsp;&nbsp;&nbsp;&nbsp;</a>' +
-                                                                '<a href="#" class="fa fa-star" data-tweet-id="' + local_tweets[i]['tweet_id'] + '" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip on right" onclick="ajaxFavoriteTweet(this); return false;"></a>' +
+                                                                '<a target="_blank" href="' + tweetUrl + '" class="fa fa-mail-reply" data-toggle="modal">&nbsp;&nbsp;&nbsp;&nbsp;</a>' +
+                                                                '<a href="#" class="fave fa fa-star" data-tweet-id="' + local_tweets[i]['tweet_id'] + '" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip on right" onclick="ajaxFavoriteTweet(this); return false;"></a>' +
                                                                 '<a href="#" class="fa fa-user" data-tweet-id="' + local_tweets[i]['tweet_id'] + '" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip on right" onclick="followUser(this); return false;" style="margin-left: 12px;"></a>' +
                                                         '</span>' + 
                                                     '</p>'+
@@ -170,7 +177,8 @@ function geoSearchByTag(q, centerCoords, radiusFromCenter){
         success : function(local_tweet_results) {
 
             drawTweets(q, local_tweet_results, centerCoords, radiusFromCenter);
-
+            numberOfTweets += local_tweet_results.length;
+            $("#totalTweeters").html(numberOfTweets);
         },
 
         // handle a non-successful response
@@ -184,7 +192,14 @@ function geoSearchByTag(q, centerCoords, radiusFromCenter){
 
 function ajaxFavoriteTweet(obj) {
 
-    var tweet_id = obj.getAttribute("data-tweet-id");
+    var tweet_id;
+
+    try{
+     tweet_id = obj.getAttribute("data-tweet-id");
+    } 
+    catch(err) {
+     tweet_id = obj;
+    }
 
     console.log("Ajax: " + tweet_id);
 
@@ -197,7 +212,16 @@ function ajaxFavoriteTweet(obj) {
             },
         // handle a successful response
         success : function(response) {
-                alert(response);
+
+                if (response)
+                {
+                    var favoritedMarker = getFavoritedMarker(tweet_id);
+                    favoritedMarker.setIcon('http://google-docslist-gadget.googlecode.com/svn-history/r91/trunk/images/icon-star-big.gif');   
+                } 
+                else
+                {
+                    alert("You already favorited this tweet!");
+                }
         },
 
         // handle a non-successful response
@@ -211,6 +235,20 @@ function ajaxFavoriteTweet(obj) {
     return false;
 }
 
+function getFavoritedMarker(tweet_id)
+{
+    for (var tag in allMarkers) 
+    {    
+        for (var marker in allMarkers[tag]) 
+            { 
+                if (tweet_id == allMarkers[tag][marker].metadata.tweet_id)
+                {
+                    return allMarkers[tag][marker]
+                }
+            } 
+    }
+
+}
 
 
 

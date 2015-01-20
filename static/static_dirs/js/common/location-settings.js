@@ -62,15 +62,44 @@ var mapContext;
 
             //On enter hit click and reset input
             if (e.which == '13') {
+                $("#radius").html($('#storeMap-radius').val()); 
+                reDrawTweetsOnRadiusChange($('#storeMap-radius').val());
             }
 
+
         });
 
-        $('#autoFollow').click(function(e) {
+        $('#autoFavorite').click(function(e) {
 
             e.preventDefault();
-            getAllTweetsInRadius();
+
+
+            for (var tag in allMarkers)
+            { 
+                for (var markerIndex in allMarkers[tag]) {
+                    ajaxFavoriteTweet(allMarkers[tag][markerIndex].metadata.tweet_id);
+                }
+            }
         });
+
+
+
+        function reDrawTweetsOnRadiusChange(radius)
+        {
+            var map = $('#storeMap').locationpicker('map').map;
+            var centerCoordinates = map.getCenter().toString().substring(1, map.getCenter().toString().length - 1);
+            var tags = $.map(allMarkers, function(element,index) {return index});
+
+            for (var tag in tags)
+            {
+                console.log("Removing: " + tags[tag]);
+                removeMarkers(tags[tag]);
+                removeUsers(tags[tag]);
+                geoSearchByTag(tags[tag], centerCoordinates, radius);   
+            }
+
+
+        }
 
 
 
