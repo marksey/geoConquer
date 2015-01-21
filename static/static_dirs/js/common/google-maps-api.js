@@ -81,20 +81,21 @@ function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
              for (var i = 0; i < local_tweets.length; i++) { 
 
 
-                var milesAway = calculateDistance(myLatitude, myLongitude, local_tweets[i]['latitude'], local_tweets[i]['longitude']);
-
-                milesAway = Math.round(milesAway * 10) / 10;   //Round to the nearest tenth
-
                 var tweetUrl = 'http://www.twitter.com/' + local_tweets[i]['screen_name'] + '/status/' + local_tweets[i]['tweet_id'];
 
+                //var milesAway = calculateDistance(myLatitude, myLongitude, local_tweets[i]['latitude'], local_tweets[i]['longitude']);
+
                 //Don't include those outside radius
-                if (milesAway > radiusFromCenter) continue;
+                //if (milesAway > radiusFromCenter) continue;
 
 
-                marker = new google.maps.Marker({
+                marker = new MarkerWithLabel({
                     position: new google.maps.LatLng(local_tweets[i]['latitude'], local_tweets[i]['longitude']),
                     map: map,
-                    animation: google.maps.Animation.DROP
+                    labelContent: local_tweets[i]['klout_score'],
+                    labelAnchor: new google.maps.Point(3, 30),
+                    labelClass: "labels", // the CSS class for the label
+                    labelInBackground: false
                 });
 
                 marker.metadata = {tweet_id: local_tweets[i]['tweet_id']};
@@ -113,9 +114,10 @@ function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
 
                     return function() {
 
-                         console.log("Screen name: " + local_tweets[i]['screen_name'] + " TWEET ID: " + local_tweets[i]['tweet_id'] + " favorited: " + local_tweets[i]['favorited'] + "\n");
+                        var milesAway = calculateDistance(myLatitude, myLongitude, local_tweets[i]['latitude'], local_tweets[i]['longitude']);
+                        milesAway = Math.round(milesAway * 10) / 10;   //Round to the nearest tenth
 
-                         var contentString = '<div id="content">' + 
+                        var contentString = '<div id="content">' + 
                                                 '<div id="siteNotice"></div>'+
                                                 '<h3 id="firstHeading" class="firstHeading">'  +
                                                     '<img alt="image" height="10%" width="10%" class="img-circle" src="' + local_tweets[i]['profile_image_url'] + ' ">&nbsp;' +
@@ -138,8 +140,8 @@ function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
                                                 '</div>'+
                                             '</div>';
 
-                      infowindow.setContent(contentString);
-                      infowindow.open(map, marker);
+                        infowindow.setContent(contentString);
+                        infowindow.open(map, marker);
                     }
                   })(marker, i));
             }

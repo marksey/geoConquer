@@ -21,11 +21,15 @@ from sets import Set
 import time
 from dateutil.parser import parse as parse_date
 import datetime
+from django.contrib.sessions.models import Session
 from twitter import Twitter, OAuth, TwitterHTTPError
 from django.http import HttpResponse
 from django.conf import settings
-import json, simplejson
+from klout import *
+import json, simplejson, math
 
+
+k = Klout(settings.KLOUT_KEY)
 
 food_hashtags = ['food','foodporn', 'foodie', 'foodgasm', 'nom', 'nomnomnom', 'foodpicsbruh', 'foodbaby', 'yummy', 'hungry', 'delicious', 'cooking', 'instafood', 'recipes', 'pizza', 'dinner', 'yum', 'beer', 'pasta', 'dessert', 'foods', 'desserts', 'chocolate', 'fooddiary', 'feast', 'feastday', 'churros', 'cookies', 'doughnuts', 'sweettooth' ,'icecream', 'sweet' , 'breakfast', 'lunch' ,'chocaholic', 'strawberries' ,'organic', 'fries', 'burgers', 'foodcoma', 'snack', 'vegetarian', 'wine', 'ipa' 'draft', 'beergasm', 'beeroftheday', 'mmmbeer', 'craftbeerporn', 'brewery', 'lowbrau', 'homebrew', 'beerchat', 'drunk', 'nowdrinking', 'craftbeer', 'sacbeer']
 
@@ -48,8 +52,11 @@ def favorite_tweet(request):
 
 	tweet_id = request.GET.get('tweet_id')
 
-	t = Twitter(auth=OAuth('2972545266-aTWaptCudDu083vnmrnlBJ43zOFD6Z06ijWSoHj', 'wDHpTExvWwRoFUtDoU3Polk4On5B77Zss32JhFa78unfh', settings.CONSUMER_KEY, settings.CONSUMER_SECRET))
+	#t = Twitter(auth=OAuth('2972545266-aTWaptCudDu083vnmrnlBJ43zOFD6Z06ijWSoHj', 'wDHpTExvWwRoFUtDoU3Polk4On5B77Zss32JhFa78unfh', settings.CONSUMER_KEY, settings.CONSUMER_SECRET))
  
+ 	t = Twitter(auth=OAuth(request.session['OAUTH_TOKEN'], request.session['OAUTH_TOKEN_SECRET'],
+                    request.session['APP_KEY'] , request.session['APP_SECRET']))
+
  	print("Tweet_id: %s" % (tweet_id))
 
 	try:
@@ -73,7 +80,9 @@ def json_local_tweets(request):
 
 	coords = request.GET.get('coords', '')
 	q = request.GET.get('q', '')
-	radius = int(request.GET.get('radius', ''))
+
+	#Convert miles to km
+	radius = int(request.GET.get('radius', '')) 
 
 	#print("JSON LOCAL TWEETS: %s %s" % (request.session['OAUTH_TOKEN'], request.session['OAUTH_TOKEN_SECRET']))
 
@@ -81,10 +90,16 @@ def json_local_tweets(request):
 
 	json_tweets = []
 
-	t = Twitter(auth=OAuth('2972545266-aTWaptCudDu083vnmrnlBJ43zOFD6Z06ijWSoHj', 'wDHpTExvWwRoFUtDoU3Polk4On5B77Zss32JhFa78unfh', settings.CONSUMER_KEY, settings.CONSUMER_SECRET))
+	#t = Twitter(auth=OAuth('2972545266-aTWaptCudDu083vnmrnlBJ43zOFD6Z06ijWSoHj', 'wDHpTExvWwRoFUtDoU3Polk4On5B77Zss32JhFa78unfh', settings.CONSUMER_KEY, settings.CONSUMER_SECRET))
+
+	t = Twitter(auth=OAuth(request.session['OAUTH_TOKEN'], request.session['OAUTH_TOKEN_SECRET'],
+                    request.session['APP_KEY'] , request.session['APP_SECRET']))
+
 	result = geo_search_tweets(t=t, q=q, coords=coords, radius=radius)
 
-	favorites = t.favorites.list(screen_name='cravesac', count=10000)
+	print("Just before faves")
+
+	favorites = t.favorites.list(screen_name=request.session['TWITTER_HANDLE'], count=10000)
 	favorited_tweets = []
 	for f in favorites: favorited_tweets.append(f['id_str'])
 
@@ -95,6 +110,15 @@ def json_local_tweets(request):
 	for tweet in result['statuses']:
 
 		if tweet['user']['screen_name'] not in already_added:
+
+			kloutScore = ""
+
+			try:
+				kloutId = k.identity.klout(screenName=tweet['user']['screen_name']).get('id')
+				kloutScore = k.user.score(kloutId=kloutId).get('score')
+				kloutScore = str(int(round(kloutScore)))
+			except:
+				pass
 
 			#Innocent until proven guilty!
 			already_favorited = False
@@ -125,7 +149,8 @@ def json_local_tweets(request):
 							'profile_image_url' : tweet['user']['profile_image_url'], 
 							'latitude'			: tweet['coordinates']['coordinates'][1],
 							'longitude'			: tweet['coordinates']['coordinates'][0],
-							'time_since_tweet'  : time_since_tweet
+							'time_since_tweet'  : time_since_tweet,
+							'klout_score'		: kloutScore
 
 						 }
 

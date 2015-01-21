@@ -16,6 +16,18 @@
         <link href="{% static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet">
         <link href="{% static 'css/common/hashtags.css' %}" rel="stylesheet">
 
+        <style>
+            .labels {
+                 color: white;
+                 background-color: red;
+                 font-family: "Lucida Grande", "Arial", sans-serif;
+                 font-size: 12px;
+                 text-align: center;
+                 width: 20px;     
+                 white-space: nowrap;
+            }
+        </style>
+
     </head>
 
     <body class="pace-done fixed-sidebar skin-3">
@@ -36,12 +48,14 @@
                             <li class="nav-header">
                                 <div class="dropdown profile-element"> 
                                     <span>
-                                        <img alt="image" class="img-circle" src="{% static 'img/profile_small.jpg' %}" />
+                                        <img alt="image" class="img-circle" src="{% autoescape off %} {{ profile_pic_url }} {% endautoescape %}" />
                                      </span>
                                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                         <span class="clear"> 
                                             <span class="block m-t-xs"> 
-                                                <strong class="font-bold">Sonny Mayugba</strong>
+                                                <strong class="font-bold">
+                                                    {% autoescape off %} {{ twitter_handle }} {% endautoescape %}
+                                                </strong>
                                             </span> 
                                             <span class="text-muted text-xs block">
                                                 Restaurant Owner 
@@ -54,7 +68,7 @@
                                         <li><a href="contacts.html">Contacts</a></li>
                                         <li><a href="mailbox.html">Mailbox</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="login.html">Logout</a></li>
+                                        <li><a href="/twitter_logout">Logout</a></li>
                                     </ul>
                                 </div>
                                 <div class="logo-element">
@@ -230,7 +244,7 @@
 
 
                     <li>
-                        <a href="login.html">
+                        <a href="/twitter_logout">
                             <i class="fa fa-sign-out"></i> Log out
                         </a>
                     </li>
@@ -291,7 +305,7 @@
                     </p>
 
                     Location: <input type="text" id="storeMap-address" style="width: 35%;margin-bottom:5px;"/>
-                    Radius (mi): <input type="text" id="storeMap-radius" style="width: 5%;margin-bottom: 5px;"/>
+                    Radius (km): <input type="text" id="storeMap-radius" style="width: 5%;margin-bottom: 5px;"/>
 
                     <div style="height:500px; position: relative; background-color: rgb(229, 227, 223); overflow: hidden;" class="google-map" id="map2">
                            
@@ -382,6 +396,7 @@
 
         <!-- Javascript plugins! -->
         <script src="{% static 'js/plugins/locationpicker.jquery.js' %}"></script>
+        <script src="{% static 'js/plugins/markerwithlabel.js' %}"></script>
 
 
         <!-- MODALS -->

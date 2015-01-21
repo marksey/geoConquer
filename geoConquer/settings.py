@@ -30,6 +30,10 @@ ALLOWED_HOSTS = []
 CONSUMER_KEY = "xG5V6MDF4HCdKkh12AOoWbEcQ"
 CONSUMER_SECRET = "Fdekjt8rRNFegU3069LEaGNKEV44TqNheF970Tek6sZGxDdguj"
 
+
+#Klout key to measure Tweeter influence
+KLOUT_KEY = 'rk2xucxv4fv4ry75rccuhqxc'  
+
 # Application definition
 
 INSTALLED_APPS = (

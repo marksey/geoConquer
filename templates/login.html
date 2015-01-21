@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Listen Up | Login</title>
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-social.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div>
+                <h1 class="logo-name ">IN+</h1>
+            </div>
+
+            <h2>Are you ready to meet your local customers?</h2>
+
+            <p>Listen Up lets you discover and engage with new people tweeting near your store front.
+                <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
+            </p>
+            <p>Login in to see it in action.</p>
+
+                <a href="/twitter_login" class="btn btn-block btn-social btn-twitter">
+                    <i class="fa fa-twitter"></i> Sign in with Twitter
+                </a>
+
+
+            <p class="m-t"> <small>Listen Up &copy; 2014</small> </p>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="{% static 'js/jquery/jquery-2.1.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+
+</body>
+
+</html>
