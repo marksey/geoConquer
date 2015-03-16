@@ -8,6 +8,7 @@ import twitter, json, simplejson
 # Create your views here.
 
 
+
 def login(request):
 
 	return render_to_response("login.html")
@@ -41,6 +42,11 @@ def dashboard(request):
 	request.session['APP_KEY'] = APP_KEY
 	request.session['APP_SECRET'] = APP_SECRET
 	request.session['TWITTER_HANDLE'] = TWITTER_HANDLE
+
+	print("APP_KEY = '%s'" % (APP_KEY))
+	print("APP_SECRET = '%s'" % (APP_SECRET))
+	print("OAUTH_TOKEN = '%s'" % (OAUTH_TOKEN))
+	print("OAUTH_TOKEN_SECRET = '%s'" % (OAUTH_TOKEN_SECRET))
 	
 
 	profile_pic_url = twitter.show_user(screen_name=TWITTER_HANDLE)['profile_image_url_https']
@@ -66,10 +72,7 @@ def twitter_login(request):
 	#request.session['OAUTH_TOKEN'] = '2798500298-4bN1tVRidLK8wlAt4QshEnQX5ep6NLb5FfkQE36'
 	#request.session['OAUTH_TOKEN_SECRET'] = '6nfZGw7sjTF5AXFfCQCxxyLnkSES7WWZWLvfkPC2ooyrQ'
 
-	print("APP_KEY = '%s'" % (APP_KEY))
-	print("APP_SECRET = '%s'" % (APP_SECRET))
-	print("OAUTH_TOKEN = '%s'" % (OAUTH_TOKEN))
-	print("OAUTH_TOKEN_SECRET = '%s'" % (OAUTH_TOKEN_SECRET))
+
 
 	return HttpResponseRedirect(auth['auth_url'])
 

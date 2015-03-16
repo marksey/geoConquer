@@ -3,8 +3,8 @@ var allUsers = {};
 var numberOfTweets = 0;
 var map;
 var infowindow, marker;
-var myLatitude = 38.575655;
-var myLongitude = -121.480336;
+var myLatitude = 34.052234;
+var myLongitude = -118.243685;
 
 
 var rad = function(x) {
@@ -81,22 +81,17 @@ function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
              for (var i = 0; i < local_tweets.length; i++) { 
 
 
-                var milesAway = calculateDistance(myLatitude, myLongitude, local_tweets[i]['latitude'], local_tweets[i]['longitude']);
 
-                milesAway = Math.round(milesAway * 10) / 10;   //Round to the nearest tenth
-
-                var tweetUrl = 'http://www.twitter.com/' + local_tweets[i]['screen_name'] + '/status/' + local_tweets[i]['tweet_id'];
+                //var milesAway = calculateDistance(myLatitude, myLongitude, local_tweets[i]['latitude'], local_tweets[i]['longitude']);
 
                 //Don't include those outside radius
-                if (milesAway > radiusFromCenter) continue;
+                //if (milesAway > radiusFromCenter) continue;
 
 
                 marker = new MarkerWithLabel({
                     position: new google.maps.LatLng(local_tweets[i]['latitude'], local_tweets[i]['longitude']),
                     map: map,
-                    draggable: true,
-                    raiseOnDrag: true,
-                    labelContent: "A",
+                    labelContent: local_tweets[i]['klout_score'],
                     labelAnchor: new google.maps.Point(3, 30),
                     labelClass: "labels", // the CSS class for the label
                     labelInBackground: false
@@ -109,18 +104,27 @@ function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
                     marker.setIcon('http://google-docslist-gadget.googlecode.com/svn-history/r91/trunk/images/icon-star-big.gif');   
                 }
 
+                if (local_tweets[i]['follows_me'] == true)
+                {
+                    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+                }
+
                 allMarkers[q].push(marker);
                 allUsers[q].push(local_tweets[i]['screen_name']);
 
-                console.log(marker);
+                //console.log(marker);
 
                 google.maps.event.addListener(marker, 'click', (function(marker, i) {
 
+
                     return function() {
 
-                         console.log("Screen name: " + local_tweets[i]['screen_name'] + " TWEET ID: " + local_tweets[i]['tweet_id'] + " favorited: " + local_tweets[i]['favorited'] + "\n");
+                        var tweetUrl = 'http://www.twitter.com/' + local_tweets[i]['screen_name'] + '/status/' + local_tweets[i]['tweet_id'];
 
-                         var contentString = '<div id="content">' + 
+                        var milesAway = calculateDistance(myLatitude, myLongitude, local_tweets[i]['latitude'], local_tweets[i]['longitude']);
+                        milesAway = Math.round(milesAway * 10) / 10;   //Round to the nearest tenth
+
+                        var contentString = '<div id="content">' + 
                                                 '<div id="siteNotice"></div>'+
                                                 '<h3 id="firstHeading" class="firstHeading">'  +
                                                     '<img alt="image" height="10%" width="10%" class="img-circle" src="' + local_tweets[i]['profile_image_url'] + ' ">&nbsp;' +
@@ -143,8 +147,8 @@ function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
                                                 '</div>'+
                                             '</div>';
 
-                      infowindow.setContent(contentString);
-                      infowindow.open(map, marker);
+                        infowindow.setContent(contentString);
+                        infowindow.open(map, marker);
                     }
                   })(marker, i));
             }

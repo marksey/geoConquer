@@ -97,6 +97,8 @@ def json_local_tweets(request):
 
 	result = geo_search_tweets(t=t, q=q, coords=coords, radius=radius)
 
+	followers = set(t.followers.ids(screen_name=request.session['TWITTER_HANDLE'])["ids"])
+
 	print("Just before faves")
 
 	favorites = t.favorites.list(screen_name=request.session['TWITTER_HANDLE'], count=10000)
@@ -141,6 +143,11 @@ def json_local_tweets(request):
 			if str(tweet['id']) in favorited_tweets:
 				already_favorited = True
 
+			follows_me = True
+
+			if tweet["user"]["id"] not in followers:
+				follows_me = False
+
 			json_tweet = {
 							'screen_name' : tweet['user']['screen_name'],
 							'tweet_text'  : tweet['text'],
@@ -150,7 +157,8 @@ def json_local_tweets(request):
 							'latitude'			: tweet['coordinates']['coordinates'][1],
 							'longitude'			: tweet['coordinates']['coordinates'][0],
 							'time_since_tweet'  : time_since_tweet,
-							'klout_score'		: kloutScore
+							'klout_score'		: kloutScore,
+							'follows_me'		: follows_me
 
 						 }
 

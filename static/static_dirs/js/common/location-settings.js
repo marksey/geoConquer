@@ -31,7 +31,7 @@ var mapContext;
 
 
         $('#storeMap').locationpicker({
-            location: {latitude: 38.573631, longitude: -121.470021},   
+            location: {latitude: 34.052234, longitude: -118.243685},   
             radius: 1 * 1609.34 / 1.6,  //Convert miles to meters
             inputBinding: {
                 latitudeInput: $('#storeMap-lat'),

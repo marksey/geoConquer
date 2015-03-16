@@ -31,8 +31,8 @@ var mapContext;
 
 
         $('#storeMap').locationpicker({
-            location: {latitude: 38.573631, longitude: -121.470021},   
-            radius: 1 * 1609.34,  //Convert miles to meters
+            location: {latitude: 34.052234, longitude: -118.243685},   
+            radius: 1 * 1609.34 / 1.6,  //Convert miles to meters
             inputBinding: {
                 latitudeInput: $('#storeMap-lat'),
                 longitudeInput: $('#storeMap-lon'),
@@ -41,7 +41,7 @@ var mapContext;
             },
             onchanged: function(currentLocation, radius, isMarkerDropped) {
 
-               radius =  Math.round( radius * 1609.34); // Convert back to whole meters
+               radius =  Math.round( radius * 1609.34 / 1.6); // Convert km back to whole meters
                
                var closestNum = closest(radius, zoomArr);
                var zoomFactor = zoomFactors[closestNum];

@@ -1,3 +1,7 @@
 #mapWrapper {
 	margin-top:50px;
 }
+
+#page-wrapper {
+	min-height:1500px;
+}
