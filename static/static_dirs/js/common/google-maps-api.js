@@ -80,8 +80,6 @@ function drawTweets(q, local_tweets, centerCoords, radiusFromCenter) {
 
              for (var i = 0; i < local_tweets.length; i++) { 
 
-
-
                 //var milesAway = calculateDistance(myLatitude, myLongitude, local_tweets[i]['latitude'], local_tweets[i]['longitude']);
 
                 //Don't include those outside radius
@@ -229,7 +227,7 @@ function ajaxFavoriteTweet(obj) {
                 } 
                 else
                 {
-                    alert("You already favorited this tweet!");
+                    console.log("You already favorited this tweet!");
                 }
         },
 

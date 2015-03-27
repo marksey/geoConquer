@@ -1,4 +1,6 @@
 var mapContext;
+var allMarkers = {};
+var map;
 
     function closest (num, arr) {
                 var curr = arr[0];
